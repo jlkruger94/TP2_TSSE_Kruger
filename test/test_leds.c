@@ -70,7 +70,7 @@ static uint16_t leds_virtual;
  * @return int Returns zero if the program executed successfully, negative if an error occurred.
  */
 void test_initial(void) {
-    //TEST_FAIL_MESSAGE("Piloto");
+    // TEST_FAIL_MESSAGE("Piloto");
 }
 
 void setUp(void) {
@@ -84,90 +84,90 @@ void tearDown(void) {
  * @test Después de la inicialización todos los LEDs deben quedar apagados.
  */
 void test_Leds_off_after_create(void) {
-   leds_virtual = 0xFFFF;
-   leds_init(&leds_virtual);
-   TEST_ASSERT_EQUAL_HEX16(0, leds_virtual);
+    leds_virtual = 0xFFFF;
+    leds_init(&leds_virtual);
+    TEST_ASSERT_EQUAL_HEX16(0, leds_virtual);
 }
 
 /**
  *  @test Se puede prender un LED individual.
  */
 void test_turn_on_led_one(void) {
-   leds_on_single(3);
-   TEST_ASSERT_EQUAL_HEX16(4, leds_virtual);
+    leds_on_single(3);
+    TEST_ASSERT_EQUAL_HEX16(4, leds_virtual);
 }
 
 /**
  * @test Se puede apagar un LED individual.
  */
 void test_turn_off_led_one(void) {
-   leds_on_single(2);
-   leds_off_single(2);
-   TEST_ASSERT_EQUAL_HEX16(0, leds_virtual);
+    leds_on_single(2);
+    leds_off_single(2);
+    TEST_ASSERT_EQUAL_HEX16(0, leds_virtual);
 }
 
 /**
  * @test Se pueden prender y apagar múltiples LED’s.
  */
 void test_turn_on_off_multiple_leds(void) {
-   leds_on_single(8);
-   leds_on_single(9);
-   leds_off_single(9);
-   leds_off_single(8);
-   leds_off_single(8);
-   TEST_ASSERT_EQUAL_HEX16(0x0, leds_virtual);
+    leds_on_single(8);
+    leds_on_single(9);
+    leds_off_single(9);
+    leds_off_single(8);
+    leds_off_single(8);
+    TEST_ASSERT_EQUAL_HEX16(0x0, leds_virtual);
 }
 
 /**
  *   @test Prender todos los LEDs de una vez.
  */
 void test_turn_all_on(void) {
-   led_turn_all_on();
-   TEST_ASSERT_EQUAL_HEX16(0xFFFF, leds_virtual);   
+    led_turn_all_on();
+    TEST_ASSERT_EQUAL_HEX16(0xFFFF, leds_virtual);
 }
 
 /**
  *  @test Apagar todos los LEDs de una vez.
  */
 void test_turn_all_off(void) {
-   led_turn_all_off();
-   TEST_ASSERT_EQUAL_HEX16(0x0000, leds_virtual);   
+    led_turn_all_off();
+    TEST_ASSERT_EQUAL_HEX16(0x0000, leds_virtual);
 }
 
 /**
  *  @test Consultar el estado de un LED que está encendido
  */
 void test_if_a_led_is_on(void) {
-   leds_on_single(5);
-   TEST_ASSERT_TRUE(led_is_this_on(5));
-   leds_on_single(6);
-   leds_off_single(6);
-   TEST_ASSERT_FALSE(led_is_this_on(6));
+    leds_on_single(5);
+    TEST_ASSERT_TRUE(led_is_this_on(5));
+    leds_on_single(6);
+    leds_off_single(6);
+    TEST_ASSERT_FALSE(led_is_this_on(6));
 }
 
 /**
  *  @test Consultar el estado de un LED que est apagado
  */
 void test_if_a_led_is_off(void) {
-   leds_on_single(5);
-   leds_off_single(5);
-   TEST_ASSERT_TRUE(led_is_this_off(5));
-   leds_on_single(6);
-   TEST_ASSERT_FALSE(led_is_this_off(6));
+    leds_on_single(5);
+    leds_off_single(5);
+    TEST_ASSERT_TRUE(led_is_this_off(5));
+    leds_on_single(6);
+    TEST_ASSERT_FALSE(led_is_this_off(6));
 }
 
 /**
  * @test Revisar limites de los parametros.
  */
 void test_check_led_limits(void) {
-   leds_on_single(1);
-   leds_on_single(16);
-   TEST_ASSERT_TRUE(led_is_this_on(1));
-   TEST_ASSERT_TRUE(led_is_this_on(16));
-   leds_off_single(1);
-   leds_off_single(16);
-   TEST_ASSERT_TRUE(led_is_this_off(1));
-   TEST_ASSERT_TRUE(led_is_this_off(16));
+    leds_on_single(1);
+    leds_on_single(16);
+    TEST_ASSERT_TRUE(led_is_this_on(1));
+    TEST_ASSERT_TRUE(led_is_this_on(16));
+    leds_off_single(1);
+    leds_off_single(16);
+    TEST_ASSERT_TRUE(led_is_this_off(1));
+    TEST_ASSERT_TRUE(led_is_this_off(16));
 }
 
 /**
@@ -175,22 +175,22 @@ void test_check_led_limits(void) {
  * Fuera de rango no se encuentra ni encendido ni apagado
  */
 void test_check_led_out_of_limits(void) {
-   leds_on_single(0);
-   leds_on_single(17);
-   leds_on_single(125);
+    leds_on_single(0);
+    leds_on_single(17);
+    leds_on_single(125);
 
-   // No estan encendidos
-   TEST_ASSERT_FALSE(led_is_this_on(0));
-   TEST_ASSERT_FALSE(led_is_this_on(17));
-   TEST_ASSERT_FALSE(led_is_this_on(125));
+    // No estan encendidos
+    TEST_ASSERT_FALSE(led_is_this_on(0));
+    TEST_ASSERT_FALSE(led_is_this_on(17));
+    TEST_ASSERT_FALSE(led_is_this_on(125));
 
-   leds_off_single(0);
-   leds_off_single(17);
+    leds_off_single(0);
+    leds_off_single(17);
 
-   // No estan apagados
-   TEST_ASSERT_FALSE(led_is_this_off(0));
-   TEST_ASSERT_FALSE(led_is_this_off(17));
-   TEST_ASSERT_FALSE(led_is_this_off(125));
+    // No estan apagados
+    TEST_ASSERT_FALSE(led_is_this_off(0));
+    TEST_ASSERT_FALSE(led_is_this_off(17));
+    TEST_ASSERT_FALSE(led_is_this_off(125));
 }
 
 /* === End of documentation ==================================================================== */

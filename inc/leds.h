@@ -48,7 +48,7 @@ typedef bool bool_t;
  *
  * @param leds_port Puntero a la variable que representa el puerto de LEDs.
  */
-void leds_init(uint16_t *led_port);
+void leds_init(uint16_t * led_port);
 
 /**
  * @brief Enciende un LED específico.
