@@ -19,11 +19,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 SPDX-License-Identifier: MIT
 *************************************************************************************************/
 
-/** 
+/**
  * @file leds.c
  * @brief Implementación del control de un puerto de LEDs.
  *
- * Este módulo permite inicializar, encender, apagar y consultar el estado 
+ * Este módulo permite inicializar, encender, apagar y consultar el estado
  * de LEDs.
  */
 
@@ -33,12 +33,12 @@ SPDX-License-Identifier: MIT
 
 /* === Macros definitions ====================================================================== */
 
-#define ALL_LEDS_OFF        0x0000 /**< Máscara para apagar todos los LEDs */
-#define ALL_LEDS_ON         0xFFFF /**< Máscara para encender todos los LEDs */
-#define LEDS_TO_BIT_OFFSET  1      /**< Offset para convertir número de LED en bit */
-#define FIRST_BIT           1      /**< Representa el primer bit en una máscara */
-#define MAX_LED_NUMBER      16     /**< Representa el numero maximo de LED valido */
-#define MIN_LED_NUMBER      1      /**< Representa el numero minimo de LED valido */
+#define ALL_LEDS_OFF       0x0000 /**< Máscara para apagar todos los LEDs */
+#define ALL_LEDS_ON        0xFFFF /**< Máscara para encender todos los LEDs */
+#define LEDS_TO_BIT_OFFSET 1      /**< Offset para convertir número de LED en bit */
+#define FIRST_BIT          1      /**< Representa el primer bit en una máscara */
+#define MAX_LED_NUMBER     16     /**< Representa el numero maximo de LED valido */
+#define MIN_LED_NUMBER     1      /**< Representa el numero minimo de LED valido */
 
 /* === Private data type declarations ========================================================== */
 
@@ -50,7 +50,7 @@ static inline bool_t led_check_if_is_on(uint16_t led_number);
 
 /* === Private variable definitions ============================================================ */
 
-static uint16_t* leds_port_private; /**< Puntero al puerto de LEDs virtual */
+static uint16_t * leds_port_private; /**< Puntero al puerto de LEDs virtual */
 
 /* === Private function implementation ========================================================= */
 
@@ -61,7 +61,7 @@ static uint16_t* leds_port_private; /**< Puntero al puerto de LEDs virtual */
  * @return uint16_t Máscara con el bit correspondiente al LED.
  */
 static inline uint16_t leds_to_bit(uint16_t led_number) {
-    return (FIRST_BIT << ((led_number) - LEDS_TO_BIT_OFFSET));
+    return (FIRST_BIT << ((led_number)-LEDS_TO_BIT_OFFSET));
 }
 
 /**
@@ -90,7 +90,7 @@ static inline bool_t led_check_if_is_on(uint16_t led_number) {
  *
  * @param leds_port Puntero a la variable que representa el puerto de LEDs.
  */
-void leds_init(uint16_t* leds_port) {
+void leds_init(uint16_t * leds_port) {
     leds_port_private = leds_port;
     led_turn_all_off(); // Apagar todos los LEDs en la inicialización.
 }
@@ -131,24 +131,22 @@ void led_turn_all_off(void) {
  * @brief Verifica si un LED específico está encendido.
  *
  * @param led_number Número del LED a consultar (1-16).
- * @return bool_t TRUE si el LED está encendido, FALSE en caso contrario o si el número esta fuera de rango.
+ * @return bool_t TRUE si el LED está encendido, FALSE en caso contrario o si el número esta fuera
+ * de rango.
  */
 bool_t led_is_this_on(uint16_t led_number) {
-    return !led_is_out_of_range(led_number) ?
-            led_check_if_is_on(led_number) != 0
-            : false;
+    return !led_is_out_of_range(led_number) ? led_check_if_is_on(led_number) != 0 : false;
 }
 
 /**
  * @brief Verifica si un LED específico está apagado.
  *
  * @param led_number Número del LED a consultar (1-16).
- * @return bool_t TRUE si el LED está apagado, FALSE en caso contrario o si el número esta fuera de rango.
+ * @return bool_t TRUE si el LED está apagado, FALSE en caso contrario o si el número esta fuera de
+ * rango.
  */
 bool_t led_is_this_off(uint16_t led_number) {
-    return !led_is_out_of_range(led_number) ?
-        !led_check_if_is_on(led_number)
-        : false;
+    return !led_is_out_of_range(led_number) ? !led_check_if_is_on(led_number) : false;
 }
 
 /* === End of documentation ==================================================================== */
